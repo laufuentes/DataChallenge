@@ -1,6 +1,7 @@
 from sklearn.model_selection import GridSearchCV
 import numpy as np
 from sklearn.metrics import r2_score
+import matplotlib.pyplot as plt 
 
 
 def param_selection(param, mod, Xtr, ytr, Xte): 
@@ -56,6 +57,25 @@ def train_eval(model, X, y, X_test, y_test):
 
     print("normal: ", r2_score(y_test, pred))
     return pred
+
+def kernel_regression_decision(X, Y, lbda=1, gamma=1):
+    """Fonction qui calcule la regression ridge avec noyau gaussien
+
+    Args:
+        X (np.array): Co-variables
+        Y (np.array): Variable à prédire
+        lbda (int, optional): Defaults to 1.
+        gamma (int, optional): _description_. Defaults to 1.
+
+    Returns:
+        np.sum(alpha*K, axis=1) (np.array): The prediction for X
+    """
+    # Gaussian Kernel matrix
+    K = np.exp(-gamma*(X[:,np.newaxis]-X[:, np.newaxis].T)**2)
+    # Solution of Kernel Ridge Regression
+    alpha = np.linalg.inv(K + len(X)*lbda*np.eye(len(X)))@Y
+    # Return the predictions for X
+    return np.sum(alpha*K, axis=1)
 
 
 def build_pred(X_test0, X_test1, pred0,pred1): 
