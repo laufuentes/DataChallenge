@@ -22,10 +22,10 @@ Pour pouvoir implémenter les notebooks, il faudra bien placer chaque dataset da
 - Classification: 
 > /Classification/Dataset_C
 - Régréssion: 
-> /regression/Dataset_R
+> /Regression/Dataset_R
 
 **2- Implémentation des notebooks**
 Pour chacun des problèmes, on pourra suivre les étapes de notre démarche en implémentant les notebooks de chaque dossier dans l'ordre. 
 
-NB: Pour pouvoir lancer les notebooks, il faudra choisir l'environnement conda crée précédamment en tant que kernel. 
+*NB: Pour pouvoir lancer les notebooks, il faudra choisir l'environnement conda crée précédamment en tant que kernel.*
 
