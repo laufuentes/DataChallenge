@@ -1,5 +1,6 @@
 # Méthodes d'apprentissage supervisé: Data Challenge 
 Benali Nafissa, Fuentes Vicente Laura 
+
 M2 Mathématiques et Intelligence Artificielle 2023/2024 
 
 ## Introduction: 
@@ -18,10 +19,13 @@ conda create --name <env_name> --file env_requirements.txt
 
 **1- Localisation des datasets train et test**
 Pour pouvoir implémenter les notebooks, il faudra bien placer chaque dataset dans sa localisation correspondante: 
-- Classification: > /Classification/Dataset_C
-- Régréssion: > /regression/Dataset_R
+- Classification: 
+> /Classification/Dataset_C
+- Régréssion: 
+> /regression/Dataset_R
 
 **2- Implémentation des notebooks**
 Pour chacun des problèmes, on pourra suivre les étapes de notre démarche en implémentant les notebooks de chaque dossier dans l'ordre. 
+
 NB: Pour pouvoir lancer les notebooks, il faudra choisir l'environnement conda crée précédamment en tant que kernel. 
 
