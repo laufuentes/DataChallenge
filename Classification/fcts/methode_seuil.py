@@ -24,9 +24,9 @@ def f1(ytr,pred, lab):
     FP = len(np.where(pred[index_false]==lab)[0])/len(ytr)
     return (2*TP)/(2*TP + FP + FN)
 
-def frontiere(Xtr,ytr, lab, folds, nb_seuils): 
+def frontiere(Xtr,ytr, lab, folds, nb_seuils, n_var): 
     """Cette fonction crée un vecteur contenant, nb_seuils, seuils différents et teste leur performance (f1 score) 
-    pour classfifier le label lab. On utilisera la méthode de cross validation pour tester les performances 
+    pour classfifier le label lab à partir de la variable n_var. On utilisera la méthode de cross validation pour tester les performances 
     moyennes de chaque seuil.  
 
     Args:
@@ -34,12 +34,13 @@ def frontiere(Xtr,ytr, lab, folds, nb_seuils):
         ytr (pd.DataFrame): Jeu de données train contenant la variable à prédire
         lab (int: 0 ou 2): label pour lequel calculer la valeur frontière 
         folds (int): nombre de folds a créer pour performer la cross-validation
-        nb_seuils (int): nombre de seuils à tester entre la valeur min,max de redshift
+        nb_seuils (int): nombre de seuils à tester entre la valeur min,max de n_var
+        n_var (string): nom de la variable sur laquelle on veut calculer le seuil
 
     Returns:
         results.mean(axis=0) (np.array): vecteur contenant les f1-scores moyennes de chaque seuil par cross-validation
     """
-    seuils = np.linspace(Xtr[["redshift"]].min()[0], Xtr[["redshift"]].max()[0], nb_seuils)
+    seuils = np.linspace(Xtr[[n_var]].min()[0], Xtr[[n_var]].max()[0], nb_seuils)
     results = np.zeros((folds,nb_seuils))
     X, y = CV_rep(Xtr, ytr, folds)
 
@@ -49,12 +50,12 @@ def frontiere(Xtr,ytr, lab, folds, nb_seuils):
         yi[np.where(yi!=lab)[0]] = 3
         for j, s in enumerate(seuils):
             pred = 3*np.ones(yi.shape[0]).reshape(-1,1)
-            index = np.where(Xi["redshift"]>s)
+            index = np.where(Xi[n_var]>s)
             pred[index] = lab
             results[i,j] = f1(yi,pred, lab)
     return results.mean(axis=0)
 
-def choix_seuils(X,y,folds,nb_seuils): 
+def choix_seuils(X,y,folds,nb_seuils, n_var): 
     """Fonction qui choisi les seuils en fonction des résultats de cross validation
 
     Args:
@@ -62,14 +63,15 @@ def choix_seuils(X,y,folds,nb_seuils):
         y (pd.DataFrame): Jeu de données avec la variable à prédire sur lequel on veut entrainer les valeurs seuils
         folds (int): nombre de folds (sous-divisions) pour faire la cross-validation
         nb_seuils (int): nombre de seuils à choisir
+        n_var (string): nom de la variable sur laquelle on travaille
 
     Returns:
         seuil_0 (float): seuil choisi pour distinguer les classes 1 et 0
         seuil_2 (float): seuil choisi pour distinguer les classes 0 et 2
     """
-    vect_x = np.linspace(X[["redshift"]].min()[0], X[["redshift"]].max()[0], nb_seuils)
-    res_0 = frontiere(X,y, 0, folds, nb_seuils)
-    res_2 = frontiere(X,y, 2, folds, nb_seuils)
+    vect_x = np.linspace(X[[n_var]].min()[0], X[[n_var]].max()[0], nb_seuils)
+    res_0 = frontiere(X,y, 0, folds, nb_seuils, n_var)
+    res_2 = frontiere(X,y, 2, folds, nb_seuils,n_var)
     plt.plot(vect_x, res_0)
     plt.plot(vect_x, res_2)
     #On prend les seuils qui maximisent la f1 
@@ -77,24 +79,25 @@ def choix_seuils(X,y,folds,nb_seuils):
     seuil_2 = vect_x[np.where(res_2==res_2.max())[0][0]]
     return seuil_0, seuil_2
 
-def predict(val0,val2, X_te): 
+def predict(val0,val2, X_te, n_var): 
     """Crée notre prédiction en fonction des valeurs val0 et val2 calculées précédamment. 
     Il crée un vecteur prédiction avec des valeurs: 
-    - 1: redshift appartenant à ]-inf,val0[
-    - 0: redshift appartenant à [val0,val2[
-    - 2: redshift appartenant à [val2,+inf[
+    - 1: n_var appartenant à ]-inf,val0[
+    - 0: n_var appartenant à [val0,val2[
+    - 2: n_var appartenant à [val2,+inf[
 
     Args:
         val0 (float): valeur seuil calculée pour distinguer la classe 1 et 0
         val2 (float): valeur seuil calculée pour distinguer la classe 0 et 2
-        X_te (pd.DataFrame): vecteur des covariables test sur lesquels on va regarder la valeur de redshift
+        X_te (pd.DataFrame): vecteur des covariables test sur lesquels on va regarder la valeur de n_var
+        n_var (string): nom de la variable sur laquelle on base la prédiction
 
     Returns:
         pred: vecteur contenant les prédictions de notre méthode_seuil
     """
     pred = np.ones(X_te.shape[0])
-    index_0 = np.where(X_te["redshift"]>val0)[0]
-    index_2 = np.where(X_te["redshift"]>val2)[0]
+    index_0 = np.where(X_te[n_var]>val0)[0]
+    index_2 = np.where(X_te[n_var]>val2)[0]
     pred[index_0] = int(0)
     pred[index_2] = int(2)
     return pred.reshape(-1,1)
