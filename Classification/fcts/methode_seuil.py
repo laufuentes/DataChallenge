@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas 
-from general import CV_rep
+from fcts.general import CV_rep
 
 
 def f1(ytr,pred, lab): 
@@ -102,3 +102,71 @@ def predict(val0,val2, X_te, n_var):
     pred[index_2] = int(2)
     return pred.reshape(-1,1)
 
+def tirage(p,pred1,pred2):
+    """Fonction qui tire melange deux vecteurs de probabilités. Elle repere les indices dans lequels les deux predicitions 
+    sont differentes et choisi une des deux valeurs en tirant aleatoirement une bernouilli avec proba p. 
+
+    Args:
+        p (np.float): probabilité associé au tirage aléatoire de la loi de Bernouilli
+        pred1 (np.array): Vecteur contenant les prédictions de la méthode 1
+        pred2 (np.array): Vecteur contenant les prédictions de la méthode 1
+
+    Returns:
+        res: nouveau vecteur de prédictions calculé à partir des deux autres prédictions 
+    """
+    res = pred1
+    idx = np.where(pred1!=pred2)[0]
+    for i in idx: 
+        if np.random.binomial(1,p)==0: 
+            res[i] = pred2[i]
+    return res
+
+def melange(folds,Xtr,ytr, var1, var2, seuil1, seuil2):
+    """Fonction qui choisi la probabilité p (avec cross-validation) que l'on tirera sur une bernouilli pour mélanger deux prédictions
+
+    Args:
+        folds (int): nombre de 
+        Xtr (np.array ou pd.DataFrame): Vecteur d'entrainement contenant les co-variables
+        ytr (np.array ou pd.DataFrame): Vecteur d'entrainement contenant la variable a predire
+        var1 (string): variable sur laquelle se basent les seuil1
+        var2 (string): variable sur laquelle se basent les seuil2
+        seuil1 (list): liste avec les deux seuils choisis avec la méthode basée sur var1 (de la forme [seuil_0,seuil_2])
+        seuil2 (list): liste avec les deux seuils choisis avec la méthode basée sur var2
+
+    Returns:
+        proba: probabilité que l'on utilisera pour mélanger deux predictions
+    """
+    X, y = CV_rep(Xtr, ytr, folds)
+    probas = np.linspace(0,1,20)
+    results = np.zeros((folds,len(probas)))
+
+    for i in range(folds): 
+        Xr = X[i]
+        yr=y[i].to_numpy()
+        for j,p in enumerate(probas): 
+            p1 = Label_Encode(yr, pd.DataFrame(predict(seuil1[0],seuil1[1], Xr, var1)))
+            p2 = Label_Encode(yr, pd.DataFrame(predict(seuil2[0],seuil2[1], Xr, var2)))
+            pred = tirage(p,p1,p2)
+            results[i,j] = f1_score(yr,pred, average="weighted")
+    
+    return probas[np.where(results.mean(axis=0)==results.mean(axis=0).max())[0][0]]
+
+
+def pred_mel(ytr,Xte, seuil1, seuil2, var1, var2, p): 
+    """Fonction qui mélange deux prédictions avec probabilité p sur une Bernouilli
+
+    Args:
+        ytr (np.array ou pd.DataFrame): vecteur d'entrainement avec la variable a prédire (servira pour entrainer la normalisation des labels)
+        Xte (np.array ou pd.DataFrame): vecteur test avec les co-variables
+        seuil1 (list): liste avec les deux seuils choisis avec la méthode basée sur var1 (de la forme [seuil_0,seuil_2])
+        seuil2 (list): liste avec les deux seuils choisis avec la méthode basée sur var2 
+        var1 (string): variable sur laquelle se basent les seuil1
+        var2 (string): variable sur laquelle se basent les seuil2
+        p (np.float): probabilité pour la Bernouilli
+
+    Returns:
+        tirage(p,p1,p2) (np.array): nouvelle prédiction contenant le mélange des deux prédicteurs
+    """
+    p1 = Label_Encode(ytr, pd.DataFrame(predict(seuil1[0],seuil1[1], Xte, var1)))
+    p2 = Label_Encode(ytr, pd.DataFrame(predict(seuil2[0],seuil2[1], Xte, var2)))
+    return tirage(p,p1,p2)
