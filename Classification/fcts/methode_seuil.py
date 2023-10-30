@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas 
-from fcts.general import CV_rep
-
+from fcts.general import *
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import f1_score
 
 def f1(ytr,pred, lab): 
     """Fonction qui calcule le score f1 associé à une prédiction (pour un problème de classification binaire, C=[3,lab] avec lab={0,2})
@@ -117,11 +118,11 @@ def tirage(p,pred1,pred2):
     res = pred1
     idx = np.where(pred1!=pred2)[0]
     for i in idx: 
-        if np.random.binomial(1,p)==0: 
+        if np.random.binomial(1,p)==1: 
             res[i] = pred2[i]
     return res
 
-def melange(folds,Xtr,ytr, var1, var2, seuil1, seuil2):
+def melange(folds,Xtr,ytr, var1, seuil1, model2):
     """Fonction qui choisi la probabilité p (avec cross-validation) que l'on tirera sur une bernouilli pour mélanger deux prédictions
 
     Args:
@@ -129,9 +130,8 @@ def melange(folds,Xtr,ytr, var1, var2, seuil1, seuil2):
         Xtr (np.array ou pd.DataFrame): Vecteur d'entrainement contenant les co-variables
         ytr (np.array ou pd.DataFrame): Vecteur d'entrainement contenant la variable a predire
         var1 (string): variable sur laquelle se basent les seuil1
-        var2 (string): variable sur laquelle se basent les seuil2
         seuil1 (list): liste avec les deux seuils choisis avec la méthode basée sur var1 (de la forme [seuil_0,seuil_2])
-        seuil2 (list): liste avec les deux seuils choisis avec la méthode basée sur var2
+        model2: modèle 2 entraîné
 
     Returns:
         proba: probabilité que l'on utilisera pour mélanger deux predictions
@@ -145,23 +145,49 @@ def melange(folds,Xtr,ytr, var1, var2, seuil1, seuil2):
         yr=y[i].to_numpy()
         for j,p in enumerate(probas): 
             p1 = Label_Encode(yr, pd.DataFrame(predict(seuil1[0],seuil1[1], Xr, var1)))
-            p2 = Label_Encode(yr, pd.DataFrame(predict(seuil2[0],seuil2[1], Xr, var2)))
+            p2 = Label_Encode(yr, pd.DataFrame(model2.predict(Xr[["redshift", "r"]])))
+            pred = tirage(p,p1,p2)
+            results[i,j] = f1_score(yr,pred, average="weighted")
+    
+    return probas[np.where(results.mean(axis=0)==results.mean(axis=0).max())[0][0]]
+
+def melange2(folds,Xtr,ytr, model1, model2):
+    """Fonction qui choisi la probabilité p (avec cross-validation) que l'on tirera sur une bernouilli pour mélanger deux prédictions
+
+    Args:
+        folds (int): nombre de 
+        Xtr (np.array ou pd.DataFrame): Vecteur d'entrainement contenant les co-variables
+        ytr (np.array ou pd.DataFrame): Vecteur d'entrainement contenant la variable a predire
+        model1: modèle 1 entrainé
+        model2: modèle 2 entraîné
+
+    Returns:
+        proba: probabilité que l'on utilisera pour mélanger deux predictions
+    """
+    X, y = CV_rep(Xtr, ytr, folds)
+    probas = np.linspace(0,1,20)
+    results = np.zeros((folds,len(probas)))
+
+    for i in range(folds): 
+        Xr = X[i]
+        yr=y[i].to_numpy()
+        for j,p in enumerate(probas): 
+            p1 = Label_Encode(yr, pd.DataFrame(model1.predict(Xr)))
+            p2 = Label_Encode(yr, pd.DataFrame(model2.predict(Xr)))
             pred = tirage(p,p1,p2)
             results[i,j] = f1_score(yr,pred, average="weighted")
     
     return probas[np.where(results.mean(axis=0)==results.mean(axis=0).max())[0][0]]
 
 
-def pred_mel(ytr,Xte, seuil1, seuil2, var1, var2, p): 
+def pred_mel(ytr, Xte, p1, p2, p): 
     """Fonction qui mélange deux prédictions avec probabilité p sur une Bernouilli
 
     Args:
         ytr (np.array ou pd.DataFrame): vecteur d'entrainement avec la variable a prédire (servira pour entrainer la normalisation des labels)
         Xte (np.array ou pd.DataFrame): vecteur test avec les co-variables
-        seuil1 (list): liste avec les deux seuils choisis avec la méthode basée sur var1 (de la forme [seuil_0,seuil_2])
-        seuil2 (list): liste avec les deux seuils choisis avec la méthode basée sur var2 
-        var1 (string): variable sur laquelle se basent les seuil1
-        var2 (string): variable sur laquelle se basent les seuil2
+        p1 (np.array): predicteur 1 (à mélanger)
+        p2 (np.array): predicteur 2 (à mélanger)
         p (np.float): probabilité pour la Bernouilli
 
     Returns:
