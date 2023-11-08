@@ -2,7 +2,29 @@ from sklearn.model_selection import GridSearchCV
 import numpy as np
 from sklearn.metrics import r2_score
 import matplotlib.pyplot as plt 
+import csv 
 
+
+def CV_rep(Xtr, ytr, nfolds): 
+    """La fonction crée des nouveaux jeux de données en sous-divisant les jeux de données en 
+
+    Args:
+        Xtr (pd.DataFrame): Jeu de données à diviser, contenant les co-variables 
+        ytr (pd.DataFrame): Vecteur à diviser, contenant la variable à prédire
+        nfolds (int): Nombre representant en combien de sous dataframes on souhaite diviser Xtr et ytr
+
+    Returns:
+        X_new (list): liste contenant (n-folds) jeux de données 
+        y_new (list): liste contenant (les n-folds) nouvelles version de ytr
+    """
+    r = np.random.randint(low=0,high=nfolds, size=Xtr.shape[0])
+    X_new = []
+    y_new = []
+    for i in range(nfolds): 
+        index = np.where(r==i)[0]
+        X_new.append(Xtr.iloc[index])
+        y_new.append(ytr.iloc[index])
+    return X_new, y_new
 
 def param_selection(param, mod, Xtr, ytr, Xte): 
     """_summary_
@@ -58,25 +80,6 @@ def train_eval(model, X, y, X_test, y_test):
     print("normal: ", r2_score(y_test, pred))
     return pred
 
-def kernel_regression_decision(X, Y, lbda=1, gamma=1):
-    """Fonction qui calcule la regression ridge avec noyau gaussien
-
-    Args:
-        X (np.array): Co-variables
-        Y (np.array): Variable à prédire
-        lbda (int, optional): Defaults to 1.
-        gamma (int, optional): _description_. Defaults to 1.
-
-    Returns:
-        np.sum(alpha*K, axis=1) (np.array): The prediction for X
-    """
-    # Gaussian Kernel matrix
-    K = np.exp(-gamma*(X[:,np.newaxis]-X[:, np.newaxis].T)**2)
-    # Solution of Kernel Ridge Regression
-    alpha = np.linalg.inv(K + len(X)*lbda*np.eye(len(X)))@Y
-    # Return the predictions for X
-    return np.sum(alpha*K, axis=1)
-
 
 def build_pred(X_test0, X_test1, pred0,pred1): 
     """Fonction qui combine les prédictions de data0 et data1 
@@ -95,3 +98,23 @@ def build_pred(X_test0, X_test1, pred0,pred1):
     pred = np.row_stack((data_0,data_1))
     return pred 
 
+def soumission(pred, date, name_pred): 
+    """Fonction qui crée une soumission avec le nom de la methode et la sauvagarde dans datasets_c
+
+    Args:
+        pred (np.array): prediction 
+        date (str): date ex: '0110'
+        name_pred (str): nom de la méthode utilisée
+    """
+    # Nommez les colonnes
+    column_names = ['wine_ID', 'target']
+    # Spécifiez le nom du fichier CSV de sortie
+    csv_filename = 'submissions_R/'+name_pred+'_'+date+'.csv'
+    # Ouvrez le fichier CSV en mode écriture et écrivez les données
+    with open(csv_filename, 'w', newline='') as csv_file:
+        writer = csv.writer(csv_file)
+        # Écrivez les noms des colonnes
+        writer.writerow(column_names)
+        # Écrivez les données
+        writer.writerows(pred)
+    return print('OK')
