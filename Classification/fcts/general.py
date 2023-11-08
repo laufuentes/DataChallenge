@@ -40,7 +40,7 @@ def Label_Encode(y_tr, new_pred):
     new_pred = le.transform(new_pred)
     return new_pred
 
-def submission(new_pred,name, date): 
+def submission(new_pred,name, date, X_test): 
     """Fonction qui genere un csv avec les valeurs à prédire associées à ses respectifs identificateurs 
     Attention: il faudrait aussi verifier que obj_ID se retrouve dans le repertoire nommé
     
@@ -48,9 +48,9 @@ def submission(new_pred,name, date):
         new_pred (np.array): vecteur contenant les predictions
         name (string): méthode utilisée pour generer la prédiction (ex: 'LDA')
         date (string): date de la prédiction (ex: '04/10')
+        X_test (pd.DataFrame): Jeu de données test utilisé pour calculer la prédiction 
     """
-
-    data = np.column_stack((np.loadtxt("../obj_ID.csv"), new_pred))
+    data = np.column_stack((X_test["obj_ID"], new_pred))
     # Nommez les colonnes
     column_names = ['obj_ID', 'label']
     # Spécifiez le nom du fichier CSV de sortie
