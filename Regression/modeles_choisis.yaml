@@ -1,0 +1,2 @@
+model0: NuSVR(C=1, nu=0.6)
+model1: ExtraTreesRegressor(n_estimators=2750, random_state=50)

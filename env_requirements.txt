@@ -116,11 +116,12 @@ notebook-shim=0.2.2=py311hecd8cb5_0
 numexpr=2.8.4=py311h728a8a3_1
 numpy=1.25.2=py311h728a8a3_0
 numpy-base=1.25.2=py311h53bf9ac_0
-openssl=3.0.11=hca72f7f_2
+openssl=3.0.12=hca72f7f_0
 packaging=23.1=py311hecd8cb5_0
 pandas=2.0.3=py311hdb55bb0_0
 pandocfilters=1.5.0=pyhd3eb1b0_0
 parso=0.8.3=pyhd3eb1b0_0
+patsy=0.5.3=pypi_0
 pcre=8.45=h23ab428_0
 pexpect=4.8.0=pyhd3eb1b0_3
 pickleshare=0.7.5=pyhd3eb1b0_1003
@@ -170,6 +171,7 @@ sniffio=1.2.0=py311hecd8cb5_1
 soupsieve=2.4=py311hecd8cb5_0
 sqlite=3.41.2=h6c40b1e_0
 stack_data=0.2.0=pyhd3eb1b0_0
+statsmodels=0.14.0=pypi_0
 tbb=2021.8.0=ha357a0b_0
 terminado=0.17.1=py311hecd8cb5_0
 threadpoolctl=2.2.0=pyh0d69192_0
@@ -187,6 +189,7 @@ webencodings=0.5.1=py311hecd8cb5_1
 websocket-client=0.58.0=py311hecd8cb5_4
 wheel=0.38.4=py311hecd8cb5_0
 widgetsnbextension=4.0.5=py311hecd8cb5_0
+xgboost=2.0.1=pypi_0
 xz=5.4.2=h6c40b1e_0
 y-py=0.5.9=py311h7242b5c_0
 yaml=0.2.5=haf1e3a3_0
