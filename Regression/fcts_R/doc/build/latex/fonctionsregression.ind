@@ -1,0 +1,51 @@
+\begin{sphinxtheindex}
+\let\bigletter\sphinxstyleindexlettergroup
+\let\spxpagem \sphinxstyleindexpagemain
+\let\spxentry \sphinxstyleindexentry
+\let\spxextra \sphinxstyleindexextra
+
+  \bigletter B
+  \item \spxentry{build\_pred()}\spxextra{dans le module general}, \hyperpage{5}
+
+  \indexspace
+  \bigletter C
+  \item \spxentry{CV\_rep()}\spxextra{dans le module general}, \hyperpage{5}
+
+  \indexspace
+  \bigletter D
+  \item \spxentry{dataset\_division}
+    \subitem \spxentry{module}, \hyperpage{3}
+
+  \indexspace
+  \bigletter F
+  \item \spxentry{formal\_div()}\spxextra{dans le module dataset\_division}, \hyperpage{3}
+
+  \indexspace
+  \bigletter G
+  \item \spxentry{general}
+    \subitem \spxentry{module}, \hyperpage{5}
+
+  \indexspace
+  \bigletter M
+  \item \spxentry{module}
+    \subitem \spxentry{dataset\_division}, \hyperpage{3}
+    \subitem \spxentry{general}, \hyperpage{5}
+
+  \indexspace
+  \bigletter P
+  \item \spxentry{param\_selection()}\spxextra{dans le module general}, \hyperpage{5}
+
+  \indexspace
+  \bigletter S
+  \item \spxentry{soumission()}\spxextra{dans le module general}, \hyperpage{6}
+
+  \indexspace
+  \bigletter T
+  \item \spxentry{train\_eval()}\spxextra{dans le module general}, \hyperpage{6}
+  \item \spxentry{treatment()}\spxextra{dans le module dataset\_division}, \hyperpage{3}
+
+  \indexspace
+  \bigletter W
+  \item \spxentry{winetype()}\spxextra{dans le module dataset\_division}, \hyperpage{3}
+
+\end{sphinxtheindex}

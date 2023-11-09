@@ -1,0 +1,7 @@
+\babel@toc {french}{}\relax 
+\contentsline {chapter}{\numberline {1}combinaison module}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}dataset\_division module}{3}{chapter.2}%
+\contentsline {chapter}{\numberline {3}general module}{5}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Indices and tables}{7}{chapter.4}%
+\contentsline {chapter}{Index des modules Python}{9}{section*.11}%
+\contentsline {chapter}{Index}{11}{section*.12}%

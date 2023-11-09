@@ -1,0 +1,12 @@
+\indexentry{module@\spxentry{module}!dataset\_division@\spxentry{dataset\_division}|hyperpage}{3}
+\indexentry{dataset\_division@\spxentry{dataset\_division}!module@\spxentry{module}|hyperpage}{3}
+\indexentry{formal\_div() (dans le module dataset\_division)@\spxentry{formal\_div()}\spxextra{dans le module dataset\_division}|hyperpage}{3}
+\indexentry{treatment() (dans le module dataset\_division)@\spxentry{treatment()}\spxextra{dans le module dataset\_division}|hyperpage}{3}
+\indexentry{winetype() (dans le module dataset\_division)@\spxentry{winetype()}\spxextra{dans le module dataset\_division}|hyperpage}{3}
+\indexentry{module@\spxentry{module}!general@\spxentry{general}|hyperpage}{5}
+\indexentry{general@\spxentry{general}!module@\spxentry{module}|hyperpage}{5}
+\indexentry{CV\_rep() (dans le module general)@\spxentry{CV\_rep()}\spxextra{dans le module general}|hyperpage}{5}
+\indexentry{build\_pred() (dans le module general)@\spxentry{build\_pred()}\spxextra{dans le module general}|hyperpage}{5}
+\indexentry{param\_selection() (dans le module general)@\spxentry{param\_selection()}\spxextra{dans le module general}|hyperpage}{5}
+\indexentry{soumission() (dans le module general)@\spxentry{soumission()}\spxextra{dans le module general}|hyperpage}{6}
+\indexentry{train\_eval() (dans le module general)@\spxentry{train\_eval()}\spxextra{dans le module general}|hyperpage}{6}
