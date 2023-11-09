@@ -18,11 +18,8 @@ conda create --name <env_name> --file env_requirements.txt
 ```
 
 **1- Localisation des datasets train et test**
-Pour pouvoir implémenter les notebooks, il faudra bien placer chaque dataset dans sa localisation correspondante: 
-- Classification: 
-> /Classification/Dataset_C
-- Régréssion: 
-> /Regression/Dataset_R
+Pour pouvoir implémenter les notebooks, il faudra préciser la localisation des datasets pour le problème de regression et classification. 
+Pour cela, in faudra compléter l'entête du premier notebook de chacun des problèmes, en précisant les chemins vers les datasets train et test. 
 
 **2- Implémentation des notebooks**
 Pour chacun des problèmes, on pourra suivre les étapes de notre démarche en implémentant les notebooks de chaque dossier dans l'ordre. 

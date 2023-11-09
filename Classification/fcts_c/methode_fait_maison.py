@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas 
-from fcts.general import *
+from fcts_c.general import *
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import f1_score
 
