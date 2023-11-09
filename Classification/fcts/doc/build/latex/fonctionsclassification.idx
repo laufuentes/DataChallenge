@@ -1,0 +1,21 @@
+\indexentry{module@\spxentry{module}!general@\spxentry{general}|hyperpage}{1}
+\indexentry{general@\spxentry{general}!module@\spxentry{module}|hyperpage}{1}
+\indexentry{CV\_rep() (dans le module general)@\spxentry{CV\_rep()}\spxextra{dans le module general}|hyperpage}{1}
+\indexentry{Label\_Encode() (dans le module general)@\spxentry{Label\_Encode()}\spxextra{dans le module general}|hyperpage}{1}
+\indexentry{submission() (dans le module general)@\spxentry{submission()}\spxextra{dans le module general}|hyperpage}{1}
+\indexentry{module@\spxentry{module}!KNN\_sel\_var@\spxentry{KNN\_sel\_var}|hyperpage}{3}
+\indexentry{KNN\_sel\_var@\spxentry{KNN\_sel\_var}!module@\spxentry{module}|hyperpage}{3}
+\indexentry{choix\_var\_knn() (dans le module KNN\_sel\_var)@\spxentry{choix\_var\_knn()}\spxextra{dans le module KNN\_sel\_var}|hyperpage}{3}
+\indexentry{main() (dans le module KNN\_sel\_var)@\spxentry{main()}\spxextra{dans le module KNN\_sel\_var}|hyperpage}{3}
+\indexentry{plot\_vars() (dans le module KNN\_sel\_var)@\spxentry{plot\_vars()}\spxextra{dans le module KNN\_sel\_var}|hyperpage}{3}
+\indexentry{pred\_acc\_var() (dans le module KNN\_sel\_var)@\spxentry{pred\_acc\_var()}\spxextra{dans le module KNN\_sel\_var}|hyperpage}{4}
+\indexentry{train() (dans le module KNN\_sel\_var)@\spxentry{train()}\spxextra{dans le module KNN\_sel\_var}|hyperpage}{4}
+\indexentry{module@\spxentry{module}!methode\_fait\_maison@\spxentry{methode\_fait\_maison}|hyperpage}{5}
+\indexentry{methode\_fait\_maison@\spxentry{methode\_fait\_maison}!module@\spxentry{module}|hyperpage}{5}
+\indexentry{choix\_seuils() (dans le module methode\_fait\_maison)@\spxentry{choix\_seuils()}\spxextra{dans le module methode\_fait\_maison}|hyperpage}{5}
+\indexentry{f1() (dans le module methode\_fait\_maison)@\spxentry{f1()}\spxextra{dans le module methode\_fait\_maison}|hyperpage}{5}
+\indexentry{frontiere() (dans le module methode\_fait\_maison)@\spxentry{frontiere()}\spxextra{dans le module methode\_fait\_maison}|hyperpage}{5}
+\indexentry{melange() (dans le module methode\_fait\_maison)@\spxentry{melange()}\spxextra{dans le module methode\_fait\_maison}|hyperpage}{6}
+\indexentry{pred\_mel() (dans le module methode\_fait\_maison)@\spxentry{pred\_mel()}\spxextra{dans le module methode\_fait\_maison}|hyperpage}{6}
+\indexentry{predict() (dans le module methode\_fait\_maison)@\spxentry{predict()}\spxextra{dans le module methode\_fait\_maison}|hyperpage}{6}
+\indexentry{tirage() (dans le module methode\_fait\_maison)@\spxentry{tirage()}\spxextra{dans le module methode\_fait\_maison}|hyperpage}{7}
