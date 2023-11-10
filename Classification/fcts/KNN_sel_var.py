@@ -95,7 +95,7 @@ def train(X,y,X_test, vars):
     Returns:
         _type_: _description_
     """
-    knn = KNeighborsClassifier()
+    knn = KNeighborsClassifier(n_neighbors=6)
     knn.fit(X[vars],y.to_numpy().ravel())
     pred = knn.predict(X_test[vars])
     return pred 
