@@ -26,6 +26,7 @@ def liste_preds(models, X_tr,y_tr, X_te):
     return liste_
 
 def choix_melange(models_0, models_1, data0, data1): 
+    np.random.seed(50)
     """Fonction qui calcule par cross validation la meilleure combinaison de prédicteurs. (pred0 et pred1)
     Sur chaque fold: 
      -  Calcule toutes les combinaisons entre les prédicteurs de data0 et data1
@@ -48,8 +49,7 @@ def choix_melange(models_0, models_1, data0, data1):
     folds = 10
     X_0, y_0 = CV_rep(X0, y0, folds)
     X_1, y_1 = CV_rep(X1, y1, folds)
-    b_0 = np.zeros(folds, dtype='int64')
-    b_1 = np.zeros(folds, dtype='int64')
+    b_0 = np.zeros(3)
 
     for k in range(folds): 
         res = np.zeros((len(models_0),len(models_1)))
@@ -62,6 +62,14 @@ def choix_melange(models_0, models_1, data0, data1):
                 pred = build_pred(X_te0, X_te1, ii,jj)[:,1]
                 res[i,j] = r2_score(build_pred(X_te0, X_te1, y_te0, y_te1)[:,1], pred)
         maxx = np.unravel_index(np.argmax(res, axis=None), res.shape)
-        b_0[k] = maxx[0]
-        b_1[k] = maxx[1]
-    return models_0[np.argmax(np.bincount(b_0))], models_1[np.argmax(np.bincount(b_1))]
+        b_0 = np.vstack ((b_0, np.array([np.max(res), maxx[0], maxx[1]])))
+
+    #On va donner priorité aux plus forts scores de cross-validation
+    b_0 = b_0[np.where(b_0[:,0] > np.sort(b_0[:,0])[5])[0]]
+    #On va chercher les répétitions
+    matr = np.array([''.join(map(str, ligne)) for ligne in b_0[:,1:]])
+    _, occurrences = np.unique(matr, return_counts=True)
+    #Indices des modèles choisis par vote majoritaire 
+    idx0 = b_0[np.argmax(occurrences), 1]
+    idx1 = b_0[np.argmax(occurrences),2]
+    return models_0[int(idx0)], models_1[int(idx1)]
