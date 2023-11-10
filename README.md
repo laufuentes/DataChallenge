@@ -24,5 +24,8 @@ Pour cela, in faudra compléter l'entête du premier notebook de chacun des prob
 **2- Implémentation des notebooks**
 Pour chacun des problèmes, on pourra suivre les étapes de notre démarche en implémentant les notebooks de chaque dossier dans l'ordre. 
 
+**3- Fonctions crées**
+Pour faire face aux deux problèmes, nous avons crée des fonctions spécialisés qui se trouvent sur les sous-dossiers: fcts_r (resp. fcts_c) pour la régréssion (resp. classification). Vous pourrez trouver la documentation des fonctions sur les pdf à l'intérieur de chacun sous-dossier. 
+
 *NB: Pour pouvoir lancer les notebooks, il faudra choisir l'environnement conda crée précédamment en tant que kernel.*
 
