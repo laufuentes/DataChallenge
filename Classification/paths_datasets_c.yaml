@@ -1,2 +1,4 @@
-test: /Users/laurafuentesvicente/M2 Maths&IA/Data challenge & Methodes supervises/DataChallenge/stars_test.csv
-train: /Users/laurafuentesvicente/M2 Maths&IA/Data challenge & Methodes supervises/DataChallenge/stars_train.csv
+test: "C:\\Users\\nafis\\Desktop\\Math&IA\\M2\\Supervis\xE9_Avanc\xE9\\DataChallenge\\\
+  DataChallenge/stars_test.csv"
+train: "C:\\Users\\nafis\\Desktop\\Math&IA\\M2\\Supervis\xE9_Avanc\xE9\\DataChallenge\\\
+  DataChallenge/stars_train.csv"
